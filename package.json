@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "cypress-slow-down": "^1.4.0"
+  }
+}
