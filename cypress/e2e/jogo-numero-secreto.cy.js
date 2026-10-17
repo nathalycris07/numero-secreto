@@ -9,16 +9,13 @@ it('Deve exibir o título principal da página', () => {
 })
 
 it('Deve permitir digitar um numero e clicar em chutar', () => {
- cy.get('.container__input')
-  .type('5')
-  .should('have.value', '5')
-
+ cy.get('.container__input').type('5')
   cy.contains('button', 'Chutar').click()
+
  })
 
 it('Deve exibir mensagem de feedback após o chute', () => {
- cy.get('.container__input').type('5')
- cy.contains('button', 'Chutar').click()
+ cy.fazerChute('5')
 
  cy.get('p').should('be.visible')
 
@@ -35,10 +32,8 @@ it('Deve permitir ganhar o jogo ao acertar o número secreto', () => {
 })
 
  it('Deve reiniciar o jogo ao clicar em Novo jogo', () => {
-  cy.window().then((win) => {
-    cy.get('.container__input').type(win.numeroSecreto)
+    cy.acertarNumeroSecreto()
     cy.contains('button', 'Chutar').click()
-  })
 
   cy.get('#reiniciar').click()
 
@@ -69,8 +64,7 @@ it('Deve dizer que o número secreto é maior quando o chute é maior', () => {
 })
 
 it('Deve limpar o campo de texto automaticamente após clicar em Chutar', () => {
-  cy.get('.container__input').type('5')
-  cy.contains('button', 'Chutar').click()
+   cy.fazerChute('5')
   cy.get('.container__input').should('have.value', '')
 })
 
@@ -78,6 +72,5 @@ it('Deve tratar ou ignorar o envio de letras no campo de chute', () => {
   cy.get('.container__input').type('abc')
   cy.contains('button', 'Chutar').click()
   cy.get('.container__input').should('have.value', '')
-
-  })
 })
+  })
