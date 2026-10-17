@@ -46,21 +46,38 @@ it('Deve permitir ganhar o jogo ao acertar o número secreto', () => {
   cy.get('#reiniciar').should('be.disabled')
 })
 
-it('Deve dizer que o número secreto é menor quando o chute é maior', () => {
+it('Deve dizer que o número secreto é menor quando o chute é menor', () => {
   cy.window().then((win) => {
     cy.get('.container__input').type(win.numeroSecreto + 1)
   })
   cy.contains('button', 'Chutar').click()
 
   cy.get('.texto__paragrafo').should('contain', 'menor')
-})
+ })
 
-it('Deve dizer que o número secreto é maior quando o chute é menor', () => {
+it('Deve dizer que o número secreto é maior quando o chute é maior', () => {
   cy.window().then((win) => {
     cy.get('.container__input').type(win.numeroSecreto - 1)
-  })
+ })
   cy.contains('button', 'Chutar').click()
 
   cy.get('.texto__paragrafo').should('contain', 'maior')
  })
+
+ it('Deve manter o botão Novo jogo desabilitado no início da partida', () => {
+  cy.get('#reiniciar').should('be.disabled')
+})
+
+it('Deve limpar o campo de texto automaticamente após clicar em Chutar', () => {
+  cy.get('.container__input').type('5')
+  cy.contains('button', 'Chutar').click()
+  cy.get('.container__input').should('have.value', '')
+})
+
+it('Deve tratar ou ignorar o envio de letras no campo de chute', () => {
+  cy.get('.container__input').type('abc')
+  cy.contains('button', 'Chutar').click()
+  cy.get('.container__input').should('have.value', '')
+
+  })
 })
